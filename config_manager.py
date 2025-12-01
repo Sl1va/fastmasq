@@ -1,9 +1,17 @@
 import json
 
+RUNTIME_HOSTS = "/var/run/fastmasq.hosts"
+
 
 class ConfigManager:
-    def __init__(self, hosts: str, jsdb: str):
+    def __init__(self):
+        self.hosts = RUNTIME_HOSTS
+        self.jsdb = None
+
+    def set_hosts(self, hosts: str):
         self.hosts = hosts
+
+    def set_db(self, jsdb: str):
         self.jsdb = jsdb
 
     def set_record(self, domain: str, addr: str):

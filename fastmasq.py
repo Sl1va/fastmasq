@@ -12,8 +12,7 @@ import asyncio
 from typing import List, Annotated
 
 app = FastAPI(title="Dnsmasq management API")
-# config_manager = ConfigManager("/etc/hosts.dnsmasq", "/etc/fastmasq.json")
-config_manager = ConfigManager("/tmp/hosts.dnsmasq", "/tmp/fastmasq.json")
+config_manager = ConfigManager()
 service_manager = DnsServiceManager()
 
 
@@ -109,7 +108,8 @@ async def upload_config(config: Annotated[bytes, File()]):
     return ActionStatusResponse(success=success)
 
 
-async def main(host, port):
+async def main(host, port, database):
+    config_manager.set_db(database)
     startup = config_manager.read_records()
     config_manager.write_records(startup)  # Not so elegant, but ok...
     await service_manager.start()
@@ -122,10 +122,28 @@ async def main(host, port):
 
 @click.command(context_settings=dict(show_default=True))
 @click.option(
-    "-H", "--host", type=str, default="0.0.0.0", metavar="HOST", help="Host to listen"
+    "-H",
+    "--host",
+    type=str,
+    default="0.0.0.0",
+    metavar="HOST",
+    help="Host to listen",
 )
 @click.option(
-    "-p", "--port", type=int, default=9898, metavar="PORT", help="Port to listen"
+    "-p",
+    "--port",
+    type=int,
+    default=9898,
+    metavar="PORT",
+    help="Port to listen",
+)
+@click.option(
+    "-D",
+    "--database",
+    type=str,
+    default="/etc/fastmasq.json",
+    metavar="PATH",
+    help="JSON records database",
 )
 def cmdline_start(**kwargs):
     asyncio.run(main(**kwargs))

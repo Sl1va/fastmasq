@@ -23,6 +23,7 @@ class DnsServiceManager:
     async def stop(self):
         if self.process is None:
             print("Dnsmasq is not running, nothing to stop")
+            return
         self.process.send_signal(signal.SIGQUIT)
         await self.process.wait()
         self.process = None
@@ -35,5 +36,6 @@ class DnsServiceManager:
     def refresh(self):
         if self.process is None:
             print("Dnsmasq is not running, nothing to refresh")
+            return
         self.process.send_signal(signal.SIGHUP)
         print("Successfully refreshed records table")

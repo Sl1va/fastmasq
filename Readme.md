@@ -1,4 +1,4 @@
-# `Fastmasq` - exposing `dnsmasq` management of domain records to HTTP API
+# `Fastmasq` - exposing `dnsmasq` management of domain records via RESTful API
 
 ## Table of content
 

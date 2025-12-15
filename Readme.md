@@ -34,7 +34,7 @@ The whole service can be managed with simple `curl` commands, and for convenienc
 
 - `./scripts/fastmasq_list.sh` - List all records
 
-- `./scripts/fastmasq_dump.sh` - Dump `fastmasq` config from server
+- `./scripts/fastmasq_dump.sh <config_path>` - Dump `fastmasq` config from server to specified path
 
 - `./scripts/fastmasq_upload.sh <config_path>` - Upload config to server
 
